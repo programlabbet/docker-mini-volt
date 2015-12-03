@@ -8,6 +8,9 @@
 
 export VOLT_ENV=production
 
+# Don't use the message bus during precompilation (no more mongo errors)
+export NO_MESSAGE_BUS=true
+
 # --- Jump to application folder
 
 cd /app
