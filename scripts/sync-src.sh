@@ -20,11 +20,11 @@ while true; do
 
 	# Step 1:
 	# Catch incoming changes...
-	rsync >/dev/null -aPq --delete --force --exclude=.git --exclude=tmp --exclude=compiled /src/ /inbox/
+	rsync >/dev/null -aPq --delete --force --exclude=.git --exclude=public --exclude=tmp --exclude=compiled /src/ /inbox/
 
 	# Step 2:
 	# Copy files locally in filesystem
-	rsync >/dev/null -aPq --delete-after --whole-file --force --delay-updates --exclude=.git --exclude=tmp --exclude=compiled /inbox/ /app/
+	rsync >/dev/null -aPq --delete-after --whole-file --force --delay-updates --exclude=.git --exclude=public --exclude=tmp --exclude=compiled /inbox/ /app/
 
 	# Wait for a few seconds before synchronizing files again
 	sleep 5
