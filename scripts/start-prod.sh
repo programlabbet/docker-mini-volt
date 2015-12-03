@@ -2,18 +2,25 @@
 #
 # Start Volt application in production mode.
 #
-# (C)Copyright Programlabbet AB 2015
+# Starting in development mode activates the source synchronization feature
+# to allow dynamic and instant updates of changes to the Volt application
+# while running.
+#
+# Note: When running in this mode the Volt application *IS* precompiled.
+#
+# (C)Copyright Programlabbet AB 2015 (http://www.programlabbet.se)
+
+# --- Mark the starting of Volt...
 
 echo >>/var/log/volt.log "`date`: Starting Volt application in production mode!"
 
 # --- Set Volt production mode
-#
+
 export VOLT_ENV=production
 
 # --- Determine which port to use for the server
-#
 
-# Default port is 3000
+# Default port is 3000 if none other has been set
 #
 if [ "$VOLT_PORT" == "" ]; then
 	export VOLT_PORT=3000
@@ -27,7 +34,7 @@ cd /app
 #
 # bundle exec thin start -p 3000 -e production
 
-# Trying out the "normal" Volt server because thin is timing out the
+# Using the the "normal" Volt server because thin is timing out the
 # websocket connection every other minute which gives way bad impression
 # on the user...
 #
