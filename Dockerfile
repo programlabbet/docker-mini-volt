@@ -64,6 +64,11 @@ RUN npm install -g svgo
 # RUN gem install image_optim_pack
 # RUN gem install image_optim
 
+# Install Nginx
+RUN apk --update add nginx
+COPY nginx.conf /etc/nginx.conf
+COPY mime.types /etc/mime.types
+
 # Create paths for source (/src). Should be mapped to project root folder.
 RUN mkdir -p /src
 

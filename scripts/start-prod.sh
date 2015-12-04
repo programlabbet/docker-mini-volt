@@ -41,4 +41,10 @@ cd /app
 # FIXME: Configure Nginx in front of the Volt server to speed up the
 #        static page loads.
 #
+# bundle exec volt server -p $VOLT_PORT
+
+# Use Nginx server to serve static assets
+nginx -p /app/ -c /etc/nginx.conf
+
+# Start the Volt server to handle any websocket connections
 bundle exec volt server -p $VOLT_PORT
