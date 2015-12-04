@@ -130,7 +130,7 @@ ONBUILD COPY . /app
 
 # Remove unecessary files and folders (like .git and caches)
 ONBUILD WORKDIR /app
-ONBUILD RUN rm -rf .git .gitignore Dockerfile docker-compose.yml tmp compiled
+ONBUILD RUN rm -rf .git .gitignore Dockerfile docker-compose.yml tmp compiled public
 
 # Map the src folder to the app folder
 ONBUILD RUN sh -c '/scripts/build-production-app.sh'
