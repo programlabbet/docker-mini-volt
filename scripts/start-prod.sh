@@ -13,18 +13,12 @@
 # --- Mark the starting of Volt...
 
 echo >>/var/log/volt.log "`date`: Starting Volt application in production mode!"
+echo >>/var/log/volt.log "`date`: websocket-port: ${VOLT_PORT_WEBSOCKET:-3000}"
+echo >>/var/log/volt.log "`date`: http-port: ${VOLT_PORT_HTTP:-80}"
 
 # --- Set Volt production mode
 
 export VOLT_ENV=production
-
-# --- Determine which port to use for the server
-
-# Default port is 3000 if none other has been set
-#
-if [ "$VOLT_PORT" == "" ]; then
-	export VOLT_PORT=3000
-fi
 
 # --- Jump to application folder
 #
@@ -43,8 +37,13 @@ cd /app
 #
 # bundle exec volt server -p $VOLT_PORT
 
+# Modify configuration and setup the correct listen port in nginx
+sed -ie "s/\$VOLT_PORT_HTTP/${VOLT_PORT_HTTP:-80}/" /etc/nginx.conf
+sed -ie "s/\$VOLT_PORT_WEBSOCKET/${VOLT_PORT_WEBSOCKET:-3000}/" /etc/nginx.conf
+cat /etc/nginx.conf
+
 # Use Nginx server to serve static assets
 nginx -p /app/ -c /etc/nginx.conf
 
 # Start the Volt server to handle any websocket connections
-bundle exec volt server -p $VOLT_PORT
+bundle exec volt server -p ${VOLT_PORT_WEBSOCKET:-3000}

@@ -1,0 +1,8 @@
+/temp/*
+/tmp/*
+/compiled/*
+/public/*
+.git/*
+.gitignore
+registry-name.txt
+docker-compose.yml

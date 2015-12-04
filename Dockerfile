@@ -45,11 +45,15 @@ WORKDIR /tmp
 ADD files/pngout-20150319-linux-static.tar.gz .
 RUN cp pngout-20150319-linux-static/x86_64/pngout-static /usr/bin/pngout
 
+# Restore workdir
+WORKDIR /
+
 # Remove temporary build files
 RUN rm -rf /tmp/*
 
-# Restore workdir
-WORKDIR /
+# Rebuild nginx under tmp
+RUN mkdir -p /tmp/nginx/client-body
+RUN chmod 777 -R /tmp/nginx
 
 # Install svgo
 RUN npm install -g svgo
@@ -130,15 +134,20 @@ ENTRYPOINT sh -c '\
 # a quick-and-dirty way to get a development environment up and running for
 # your Volt application.
 
+# Expose port 80 (for static files) and 3000 for websocket
+ONBUILD EXPOSE ${VOLT_PORT_HTTP:-80} ${VOLT_PORT_WEBSOCKET:-3000}
+
 # Add the application SOURCE code
 ONBUILD COPY . /app
 
 # Remove unecessary files and folders (like .git and caches)
 ONBUILD WORKDIR /app
-ONBUILD RUN rm -rf .git .gitignore Dockerfile docker-compose.yml tmp compiled public
 
 # Map the src folder to the app folder
 ONBUILD RUN sh -c '/scripts/build-production-app.sh'
+
+# Tweak the application for a specific base url
+ONBUILD RUN sh -c '/scripts/tweak_base_url.sh'
 
 # Add production entrypoint
 ONBUILD ENTRYPOINT sh -c '/scripts/start-prod.sh'
