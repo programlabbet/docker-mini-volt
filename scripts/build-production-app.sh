@@ -23,6 +23,17 @@ sed -ie 's/\s*#.*config\.compress_images.*true/  config\.compress_images=false/'
 echo "`date`: Modified config/app.rb - final configuration:"
 cat config/app.rb
 
+# --- Tweak client routing rules to adapt to new base url
+
+# echo "`date`: Current folder: `pwd`"
+# echo "`date`: ls -l main/config/: `ls -lh main/config/`"
+# echo "`date`: ls -l main/: `ls -lh main/`"
+# echo "`date`: ls -l .: `ls -lh .`"
+sed -ie "s#\"/#\"$VOLT_BASE_URL/#g" app/main/config/routes.rb
+# Debugging: Output the final configuration for inspection
+echo "`date`: Modified main/config/routes.rb - final routes:"
+cat app/main/config/routes.rb
+
 # --- Install dependencies
 
 bundle install

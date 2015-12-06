@@ -10,6 +10,10 @@
 
 cd /app/public
 
+# --- Debug
+
+echo "**** DEBUG --- VOLT_BASE_URL: $VOLT_BASE_URL"
+
 # --- Loop through all js, css and html files and fix the base url
 
-sed -ie "/\/app\//${VOLT_BASE_URL}\/app\//" `find . -iname *.js -o -iname *.css -o -iname *.html`
+sed -ie "s#/app/#$VOLT_BASE_URL/app/#g" `find . -iname *.js -o -iname *.css -o -iname *.html`
