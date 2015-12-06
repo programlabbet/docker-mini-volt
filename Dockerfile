@@ -134,6 +134,12 @@ ENTRYPOINT sh -c '\
 # a quick-and-dirty way to get a development environment up and running for
 # your Volt application.
 
+# Setup some default build arguments
+ONBUILD ARG VOLT_PORT_WEBSOCKET=3000
+ONBUILD ARG VOLT_PORT_HTTP=80
+ONBUILD ARG VOLT_BASE_URL=""
+# ONBUILD ARG VOLT_ENV=production
+
 # Expose port 80 (for static files) and 3000 for websocket
 ONBUILD EXPOSE ${VOLT_PORT_HTTP:-80} ${VOLT_PORT_WEBSOCKET:-3000}
 
