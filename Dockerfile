@@ -12,7 +12,8 @@ MAINTAINER Anders Hansson <anders@programlabbet.se>
 
 # Install the volt gem
 RUN gem install volt -v 0.9.6
-# Currently we don't install thin explicitly: RUN gem install thin
+# RUN gem install thin
+RUN gem install puma
 
 # Install Node (used for precompiling)
 RUN apk --update add nodejs
@@ -149,11 +150,12 @@ ONBUILD COPY . /app
 # Remove unecessary files and folders (like .git and caches)
 ONBUILD WORKDIR /app
 
-# Map the src folder to the app folder
+# Build production version of the application
 ONBUILD RUN sh -c '/scripts/build-production-app.sh'
 
 # Tweak the application for a specific base url
-ONBUILD RUN sh -c '/scripts/tweak_base_url.sh'
+# (Not activated for now)
+# ONBUILD RUN sh -c '/scripts/tweak_base_url.sh'
 
 # Add production entrypoint
 ONBUILD ENTRYPOINT sh -c '/scripts/start-prod.sh'

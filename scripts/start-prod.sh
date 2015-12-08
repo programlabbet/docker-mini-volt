@@ -19,14 +19,20 @@ echo >>/var/log/volt.log "`date`: http-port: ${VOLT_PORT_HTTP:-80}"
 # --- Set Volt production mode
 
 export VOLT_ENV=production
+export RACK_ENV=production
 
 # --- Jump to application folder
-#
+
 cd /app
 
 # --- Fire up the production server on port 3000
-#
-# bundle exec thin start -p 3000 -e production
+
+bundle exec volt s -p ${VOLT_PORT_HTTP}
+
+# Currently we stop here if we fall through...
+exit 0
+
+# --- For the time beeing nginx doesn't work for us
 
 # Using the the "normal" Volt server because thin is timing out the
 # websocket connection every other minute which gives way bad impression
