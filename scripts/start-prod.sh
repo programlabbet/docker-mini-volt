@@ -25,9 +25,9 @@ export RACK_ENV=production
 
 cd /app
 
-# --- Fire up the production server on port 3000
+# --- Fire up the production server on specified http port (80 per default)
 
-bundle exec volt s -p ${VOLT_PORT_HTTP}
+bundle exec volt s -p ${VOLT_PORT_HTTP:-80}
 
 # Currently we stop here if we fall through...
 exit 0
