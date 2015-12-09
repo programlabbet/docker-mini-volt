@@ -13,6 +13,8 @@
 # --- Mark the starting of Volt...
 
 echo >>/var/log/volt.log "`date`: Starting Volt application in development mode!"
+echo >>/var/log/volt.log "`date`: websocket-port: ${VOLT_PORT_HTTP:-3000}"
+echo >>/var/log/volt.log "`date`: http-port: ${VOLT_PORT_HTTP:-3000}"
 
 # --- Start periodical synchronizations in the background
 
