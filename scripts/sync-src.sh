@@ -35,10 +35,10 @@ while true; do
 	#
 
 	# Step 1: Transfer incoming changes
-	rsync >/dev/null -aPq --delete --force --exclude=.git --exclude=public --exclude=tmp --exclude=compiled /src/ /inbox/
+	rsync >/dev/null -aPqL --delete --force --exclude=.git --exclude=public --exclude=tmp --exclude=compiled /src/ /inbox/
 
 	# Step 2: Quickly copy files locally to app folder
-	rsync >/dev/null -aPq --delete-after --whole-file --force --delay-updates --exclude=.git --exclude=public --exclude=tmp --exclude=compiled /inbox/ /app/
+	rsync >/dev/null -aPqL --delete-after --whole-file --force --delay-updates --exclude=.git --exclude=public --exclude=tmp --exclude=compiled /inbox/ /app/
 
 	# Wait for a few seconds before attempting to synchronize files once more
 	#
